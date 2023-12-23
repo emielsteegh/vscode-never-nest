@@ -1,0 +1,90 @@
+{
+    "name": "never-nest",
+    "displayName": "Never Nest",
+    "description": "Reminds you to nest less.",
+    "icon": "assets/icon.png",
+    "publisher": "emielsteegh",
+    "version": "1.1.1",
+    "engines": {
+        "vscode": "^1.85.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "repository": {
+        "url": "https://github.com/emielsteegh/vscode-never-nest.git",
+        "type": "git"
+    },
+    "bugs": {
+        "url": "https://github.com/emielsteegh/vscode-never-nest/issues"
+    },
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./dist/extension.js",
+    "contributes": {
+        "configuration": {
+            "type": "object",
+            "title": "never-nest configuration",
+            "properties": {
+                "neverNest.includedLanguages": {
+                    "type": "array",
+                    "default": [
+                        "typescript",
+                        "python",
+                        "rust",
+                        "java"
+                    ],
+                    "description": "Languages for which never-nest should be activated. When empty will use for all languages."
+                },
+                "neverNest.colorLight": {
+                    "type": "string",
+                    "default": "rgba(255,0,0,0.5)",
+                    "description": "Color used to show nesting errors in light mode (hex, rgba, etc)."
+                },
+                "neverNest.colorDark": {
+                    "type": "string",
+                    "default": "rgba(255,0,255,0.5)",
+                    "description": "Color used to show nesting errors in dark mode (hex, rgba, etc)"
+                },
+                "neverNest.maxTabDepth": {
+                    "type": "integer",
+                    "default": 3,
+                    "description": "Style of violation highlighting. Can be either `full` or `separator`. Defaults to `full`. `full` will highlight the entire line, while `separator` will only highlight the tab indicator bars `|`."
+                },
+                "neverNest.violationStyle": {
+                    "type": "string",
+                    "default": "full",
+                    "enum": [
+                        "full",
+                        "separator"
+                    ],
+                    "description": "Full mode uses a full colored tab to indicate the indendation. Separator mode will only color the default indentation."
+                }
+            }
+        }
+    },
+    "scripts": {
+      "vscode:prepublish": "pnpm run esbuild-base --minify",
+      "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+      "esbuild": "pnpm run esbuild-base --sourcemap",
+      "esbuild-watch": "pnpm run esbuild-base --sourcemap --watch",
+      "test-compile": "tsc -p ./",
+      "publish": "pnpm run vscode:prepublish && vsce publish --no-dependencies"
+    },
+    "devDependencies": {
+        "@types/mocha": "^10.0.6",
+        "@types/node": "18.x",
+        "@types/vscode": "^1.85.0",
+        "@typescript-eslint/eslint-plugin": "^6.15.0",
+        "@typescript-eslint/parser": "^6.15.0",
+        "@vscode/test-cli": "^0.0.4",
+        "@vscode/test-electron": "^2.3.8",
+        "@vscode/vsce": "^2.22.0",
+        "esbuild": "^0.19.10",
+        "eslint": "^8.56.0",
+        "i": "^0.3.7",
+        "ts-loader": "^9.5.1",
+        "typescript": "^5.3.3"
+    }
+}
