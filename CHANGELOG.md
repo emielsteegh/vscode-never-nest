@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added an icon to the extension.
 
-## Fixed
+### Fixed
 
 - Linked to changelog in README.
 
@@ -32,4 +32,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `neverNest.colorLight` setting.
 - Added `neverNest.colorDark` setting.
 - Added `neverNest.violationStyle` setting.
-- ADded `neverNest.maxTabDepth` setting.
+- Added `neverNest.maxTabDepth` setting.
