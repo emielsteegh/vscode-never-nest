@@ -48,7 +48,6 @@ function checkLanguageValid(editor: vscode.TextEditor) {
  * @param event - The document change event (optional)
  */
 export function tryTriggerUpdateDecorations(editor: vscode.TextEditor | undefined, event?: vscode.TextDocumentChangeEvent) {
-	console.log("tryTriggerUpdateDecorations");
 
 	if (!editor) {
 		// No editor
@@ -85,7 +84,6 @@ function updateDecorations(editor: vscode.TextEditor) {
 
 	clearDecorationsOf(editor);
 	while (match = reViolation.exec(documentText)) {
-		console.log(match);
 		const posStart = editor.document.positionAt(match.index);
 		const posEnd = editor.document.positionAt(match.index + match[0].length);
 		addDecorationTo(editor, posStart, posEnd, tabSize);

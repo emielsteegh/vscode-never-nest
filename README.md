@@ -32,6 +32,7 @@ This extension contributes the following settings:
 * `neverNest.violationStyle`: Style of violation highlighting. Can be either `full` or `separator`. Defaults to `full`.
   * `full` will highlight the entire line
   * `separator` will only highlight the tab indicator bars `|`.
+* `neverNest.enableHoverMessage`: Whether to show a tooltip when hovering over the tab indicator. Defaults to `false`.
 
 ## Known Issues
 

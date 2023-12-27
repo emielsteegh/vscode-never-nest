@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { config } from './config';
+import { tryTriggerUpdateDecorations } from './extension';
 
 
 const HOVER_EXPLANATION = `Indent depth violation, please reduce nesting level.
@@ -14,8 +15,10 @@ const HOVER_EXPLANATION = `Indent depth violation, please reduce nesting level.
 let vscodeThemeKind = vscode.window.activeColorTheme.kind;
 vscode.window.onDidChangeActiveColorTheme(e => {
     vscodeThemeKind = e.kind;
+    const oldDecorationType = currentDecorationType;
+    currentDecorationType = getDecorationType();
+    reloadDecorations(oldDecorationType);
 });
-
 
 // returns the decoration type as described by the config
 // the settings used here are: colorLight, colorDark, violationStyle
@@ -54,9 +57,9 @@ let hoverDecorationType = vscode.window.createTextEditorDecorationType({});
 // if the config of neverNest changes, reload old decorations, update the decoration type,
 vscode.workspace.onDidChangeConfiguration(e => {
     if (e.affectsConfiguration('neverNest')) {
-        const newDecorationType = getDecorationType();
-        reloadDecorations(currentDecorationType, newDecorationType);
-        currentDecorationType = newDecorationType;
+        const previousDecorationType = currentDecorationType;
+        currentDecorationType = getDecorationType();
+        reloadDecorations(previousDecorationType);
     }
 });
 
@@ -72,6 +75,7 @@ export function addDecorationTo(editor: vscode.TextEditor, posStart: vscode.Posi
     let { decorations, hovers } = getOrCreateEditorMapEntry(editor);
 
     const violationRange = new vscode.Range(posStart, posEnd);
+
     hovers.push({ range: violationRange, hoverMessage: HOVER_EXPLANATION });
 
     if (config("violationStyle") === 'separator') {
@@ -95,14 +99,19 @@ export function clearDecorationsOf(editor: vscode.TextEditor) {
 export function showDecorationsOf(editor: vscode.TextEditor) {
     let { decorations, hovers } = getOrCreateEditorMapEntry(editor);
     editor.setDecorations(currentDecorationType, decorations);
-    editor.setDecorations(hoverDecorationType, hovers);
+
+    // only show hover message if enabled in config
+    // we do want keep updatin the list in case the config changes
+    if (config("enableHoverMessage") === true) {
+        editor.setDecorations(hoverDecorationType, hovers);
+    }
 }
 
 
 // loops through all editors that have decorations
 // cleans up old editors in the list
 // living ones get their decorations reloaded
-function reloadDecorations(oldDecorationType: vscode.TextEditorDecorationType, newDecorationType: vscode.TextEditorDecorationType): void {
+function reloadDecorations(oldDecorationType: vscode.TextEditorDecorationType): void {
     const affectedEditors = editorMap.keys();
 
     const affectedEditorsArray = Array.from(affectedEditors);
@@ -114,10 +123,9 @@ function reloadDecorations(oldDecorationType: vscode.TextEditorDecorationType, n
         } else if (editor.document.isClosed) {
             editorMap.delete(editor);
         } else {
-            // collect decorationsArray from oldDecorationType
-            const { decorations } = getOrCreateEditorMapEntry(editor);
             editor.setDecorations(oldDecorationType, []);
-            editor.setDecorations(newDecorationType, decorations);
+            editor.setDecorations(hoverDecorationType, []);
+            tryTriggerUpdateDecorations(editor);
         }
     });
 }
