@@ -4,7 +4,7 @@
     "description": "Reminds you to nest less.",
     "icon": "assets/icon.png",
     "publisher": "emielsteegh",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "engines": {
         "vscode": "^1.85.0"
     },
@@ -21,7 +21,7 @@
     "activationEvents": [
         "onStartupFinished"
     ],
-    "main": "./dist/extension.js",
+    "main": "./out/main.js",
     "contributes": {
         "configuration": {
             "type": "object",
@@ -50,7 +50,7 @@
                 "neverNest.maxTabDepth": {
                     "type": "integer",
                     "default": 3,
-                    "description": "Style of violation highlighting. Can be either `full` or `separator`. Defaults to `full`. `full` will highlight the entire line, while `separator` will only highlight the tab indicator bars `|`."
+                    "description": "Maximum allowed tabs before showing an violation."
                 },
                 "neverNest.violationStyle": {
                     "type": "string",
@@ -60,6 +60,11 @@
                         "separator"
                     ],
                     "description": "Full mode uses a full colored tab to indicate the indendation. Separator mode will only color the default indentation."
+                },
+                "neverNest.enableHoverMessage": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether to show a tooltip when hovering over the tab indicator."
                 }
             }
         }
@@ -69,8 +74,9 @@
       "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
       "esbuild": "pnpm run esbuild-base --sourcemap",
       "esbuild-watch": "pnpm run esbuild-base --sourcemap --watch",
-      "test-compile": "tsc -p ./",
-      "publish": "pnpm run vscode:prepublish && vsce publish --no-dependencies"
+      "publish": "pnpm run vscode:prepublish && vsce publish --no-dependencies",
+      "watch": "pnpm run esbuild-watch",
+      "format": "eslint 'src/*.{js,ts}' --fix"
     },
     "devDependencies": {
         "@types/mocha": "^10.0.6",

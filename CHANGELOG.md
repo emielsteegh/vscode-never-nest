@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2023-12-24
+
+### Added
+
+- Added `neverNest.enableHoverMessage` setting.
+- Changing the theme (light/dark) now triggers a reload.
+
+### Removed
+
+- Removed redundant logging.
+- Removed `dist` folder (esbuild uses `out`).
+
+### Fixed
+
+- Improved reload behavior, now does a full reload.
+- Fixed changelog and readme mistakes.
+
 ## [1.1.1] - 2023-12-23
 
 ### Fixed
