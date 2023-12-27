@@ -75,7 +75,8 @@
       "esbuild": "pnpm run esbuild-base --sourcemap",
       "esbuild-watch": "pnpm run esbuild-base --sourcemap --watch",
       "publish": "pnpm run vscode:prepublish && vsce publish --no-dependencies",
-      "watch": "pnpm run esbuild-watch"
+      "watch": "pnpm run esbuild-watch",
+      "format": "eslint 'src/*.{js,ts}' --fix"
     },
     "devDependencies": {
         "@types/mocha": "^10.0.6",
