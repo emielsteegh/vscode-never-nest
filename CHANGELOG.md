@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2024-01-04
+
+### Fixed
+
+- Changed vscode dependency to `^1.40.0` to ensure compatibility with earlier versions.
+
 ## [1.2.0] - 2023-12-24
 
 ### Added
