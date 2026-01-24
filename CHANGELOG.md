@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2025-01-24
+
+### Added
+
+- Added `neverNest.excludedLanguages` setting to disable the extension for specific languages.
+
+### Changed
+
+- Default `includedLanguages` is now empty (all languages enabled by default).
+- Default `excludedLanguages` includes plaintext, markdown, json, jsonc, yaml, xml, html, css, and log.
+- Default `violationStyle` changed from `full` to `separator`.
+- Default colors updated: red for dark mode, soft red for light mode.
+- Upgraded to ESLint 9 with new flat config.
+- Minimum VS Code version bumped from 1.40 to 1.80.
+
 ## [1.3.0] - 2024-01-04
 
 ### Fixed

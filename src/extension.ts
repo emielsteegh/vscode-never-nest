@@ -32,10 +32,14 @@ export function activate(context: vscode.ExtensionContext) {
  * @returns true if the language is valid or false otherwise
  */
 function checkLanguageValid(editor: vscode.TextEditor) {
+	const currentLanguageId = editor.document.languageId;
+
+	const excludedLanguages = config("excludedLanguages") as string[];
+	if (excludedLanguages.includes(currentLanguageId)) { return false; }
+
 	const includedLanguages = config("includedLanguages") as string[];
 	if (includedLanguages.length === 0) { return true; }
 
-	const currentLanguageId = editor.document.languageId;
 	if (includedLanguages.includes(currentLanguageId)) { return true; }
 
 	return false;
@@ -67,7 +71,7 @@ export function tryTriggerUpdateDecorations(editor: vscode.TextEditor | undefine
 
 function updateDecorations(editor: vscode.TextEditor) {
 
-	var documentText = editor.document.getText();
+	const documentText = editor.document.getText();
 
 	const tabSizeRaw = editor?.options.tabSize;
 	let tabSize: number;

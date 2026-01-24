@@ -4,9 +4,9 @@
     "description": "Reminds you to nest less.",
     "icon": "assets/icon.png",
     "publisher": "emielsteegh",
-    "version": "1.3.0",
+    "version": "1.4.0",
     "engines": {
-        "vscode": "^1.40.0"
+        "vscode": "^1.80.0"
     },
     "categories": [
         "Other"
@@ -29,22 +29,32 @@
             "properties": {
                 "neverNest.includedLanguages": {
                     "type": "array",
+                    "default": [],
+                    "description": "Languages for which never-nest should be activated. When empty (default) will use for all languages."
+                },
+                "neverNest.excludedLanguages": {
+                    "type": "array",
                     "default": [
-                        "typescript",
-                        "python",
-                        "rust",
-                        "java"
+                        "plaintext",
+                        "markdown",
+                        "json",
+                        "jsonc",
+                        "yaml",
+                        "xml",
+                        "html",
+                        "css",
+                        "log"
                     ],
-                    "description": "Languages for which never-nest should be activated. When empty will use for all languages."
+                    "description": "Languages for which never-nest should be disabled. Takes precedence over includedLanguages."
                 },
                 "neverNest.colorLight": {
                     "type": "string",
-                    "default": "rgba(255,0,0,0.5)",
+                    "default": "rgba(255,120,120,0.6)",
                     "description": "Color used to show nesting errors in light mode (hex, rgba, etc)."
                 },
                 "neverNest.colorDark": {
                     "type": "string",
-                    "default": "rgba(255,0,255,0.5)",
+                    "default": "rgba(200,0,0,0.5)",
                     "description": "Color used to show nesting errors in dark mode (hex, rgba, etc)"
                 },
                 "neverNest.maxTabDepth": {
@@ -54,7 +64,7 @@
                 },
                 "neverNest.violationStyle": {
                     "type": "string",
-                    "default": "full",
+                    "default": "separator",
                     "enum": [
                         "full",
                         "separator"
@@ -70,27 +80,26 @@
         }
     },
     "scripts": {
-      "vscode:prepublish": "pnpm run esbuild-base --minify",
-      "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
-      "esbuild": "pnpm run esbuild-base --sourcemap",
-      "esbuild-watch": "pnpm run esbuild-base --sourcemap --watch",
-      "publish": "pnpm run vscode:prepublish && vsce publish --no-dependencies",
-      "watch": "pnpm run esbuild-watch",
-      "format": "eslint 'src/*.{js,ts}' --fix"
+        "vscode:prepublish": "pnpm run esbuild-base --minify",
+        "esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
+        "esbuild": "pnpm run esbuild-base --sourcemap",
+        "esbuild-watch": "pnpm run esbuild-base --sourcemap --watch",
+        "publish": "pnpm run vscode:prepublish && vsce publish --no-dependencies",
+        "watch": "pnpm run esbuild-watch",
+        "format": "eslint 'src/*.{js,ts}' --fix"
     },
     "devDependencies": {
-        "@types/mocha": "^10.0.6",
-        "@types/node": "18.x",
-        "@types/vscode": "^1.40.0",
-        "@typescript-eslint/eslint-plugin": "^6.15.0",
-        "@typescript-eslint/parser": "^6.15.0",
+        "@types/mocha": "^10.0.10",
+        "@types/node": "~18.19.130",
+        "@types/vscode": "~1.80.0",
         "@vscode/test-cli": "^0.0.4",
-        "@vscode/test-electron": "^2.3.8",
-        "@vscode/vsce": "^2.22.0",
-        "esbuild": "^0.19.10",
-        "eslint": "^8.56.0",
+        "@vscode/test-electron": "^2.5.2",
+        "@vscode/vsce": "^2.32.0",
+        "esbuild": "^0.19.12",
+        "eslint": "^9",
         "i": "^0.3.7",
-        "ts-loader": "^9.5.1",
-        "typescript": "^5.3.3"
+        "ts-loader": "^9.5.4",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.53.1"
     }
 }

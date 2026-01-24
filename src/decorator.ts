@@ -43,7 +43,7 @@ export function getDecorationType() {
 }
 
 // stores the decorations of all editors
-let editorMap = new Map<vscode.TextEditor,
+const editorMap = new Map<vscode.TextEditor,
     {
         decorations: vscode.DecorationOptions[],
         hovers: vscode.DecorationOptions[]
@@ -52,7 +52,7 @@ let editorMap = new Map<vscode.TextEditor,
 // this decoration type is used for the violation decoration, it changes
 let currentDecorationType = getDecorationType();
 // this decoration type is used for the hover message, it doesnt change
-let hoverDecorationType = vscode.window.createTextEditorDecorationType({});
+const hoverDecorationType = vscode.window.createTextEditorDecorationType({});
 
 // if the config of neverNest changes, reload old decorations, update the decoration type,
 vscode.workspace.onDidChangeConfiguration(e => {
@@ -72,7 +72,7 @@ function getOrCreateEditorMapEntry(editor: vscode.TextEditor) {
 
 // adds an object to the editors decorations array
 export function addDecorationTo(editor: vscode.TextEditor, posStart: vscode.Position, posEnd: vscode.Position, tabSize: number) {
-    let { decorations, hovers } = getOrCreateEditorMapEntry(editor);
+    const { decorations, hovers } = getOrCreateEditorMapEntry(editor);
 
     const violationRange = new vscode.Range(posStart, posEnd);
 
@@ -81,7 +81,7 @@ export function addDecorationTo(editor: vscode.TextEditor, posStart: vscode.Posi
     if (config("violationStyle") === 'separator') {
         const violationChunks = divideRangeIntoChunks(violationRange, tabSize);
         for (const chunkRange of violationChunks) {
-            let decoration = { range: chunkRange };
+            const decoration = { range: chunkRange };
             decorations.push(decoration);
         }
     } else {
@@ -97,7 +97,7 @@ export function clearDecorationsOf(editor: vscode.TextEditor) {
 
 // shows the objects to be decorated in the editor
 export function showDecorationsOf(editor: vscode.TextEditor) {
-    let { decorations, hovers } = getOrCreateEditorMapEntry(editor);
+    const { decorations, hovers } = getOrCreateEditorMapEntry(editor);
     editor.setDecorations(currentDecorationType, decorations);
 
     // only show hover message if enabled in config
@@ -134,7 +134,7 @@ function reloadDecorations(oldDecorationType: vscode.TextEditorDecorationType): 
 function divideRangeIntoChunks(range: vscode.Range, chunkSize: number): vscode.Range[] {
     const chunks: vscode.Range[] = [];
     let start = range.start;
-    let end = range.end;
+    const end = range.end;
 
     while (start.isBefore(end)) {
         const chunkEnd = start.translate(0, chunkSize);

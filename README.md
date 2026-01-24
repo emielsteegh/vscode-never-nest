@@ -25,11 +25,12 @@ harder to maintain.
 
 This extension contributes the following settings:
 
-* `neverNest.includedLanguages`: Languages for which never-nest should be activated. When empty will use for all languages.
+* `neverNest.includedLanguages`: Languages for which never-nest should be activated. Defaults to all languages (empty array). Set specific languages to limit activation.
+* `neverNest.excludedLanguages`: Languages for which never-nest should be disabled. Takes precedence over includedLanguages. Defaults to `plaintext`, `markdown`, `json`, `jsonc`, `yaml`, `xml`, `html`, `css`, `log`.
 * `neverNest.colorLight`: Color used to show nesting errors in light mode *(hex, rgba, etc)*.
 * `neverNest.colorDark`: Color used to show nesting errors in dark mode *(hex, rgba, etc)*.
 * `neverNest.maxTabDepth`: Maximum allowed nesting depth (consecutive tabs). Any more than this will count as a violation. Defaults to 3.
-* `neverNest.violationStyle`: Style of violation highlighting. Can be either `full` or `separator`. Defaults to `full`.
+* `neverNest.violationStyle`: Style of violation highlighting. Can be either `full` or `separator`. Defaults to `separator`.
   * `full` will highlight the entire line
   * `separator` will only highlight the tab indicator bars `|`.
 * `neverNest.enableHoverMessage`: Whether to show a tooltip when hovering over the tab indicator. Defaults to `false`.
